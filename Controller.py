@@ -64,6 +64,33 @@ class CmdLineController(cmd.Cmd):
 	
 	
 	# --- ALGVis Shell commands ---
+	"""
+	ToDo:
+	Run Alg
+	Algorithms
+	Get alg info
+	
+	"""
+	def do_run_alg(self, arg):
+		"""
+		Runs a paticular algorithm
+		
+		"""
+		print arg
+		print type(arg)
+		
+	def do_alg_info(self, arg):
+		"""
+		Gets the info of a paticular algorithm
+		"""
+		print arg
+		
+	def do_list_algs(self, arg)
+		"""
+		Lists the possible algoithms
+		"""
+		print arg
+	
 		
 def parse(arg):
     'Convert a series of zero or more numbers to an argument tuple'
