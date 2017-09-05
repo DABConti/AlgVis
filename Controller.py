@@ -1,6 +1,7 @@
-import cmd, sys
+import cmd, sys, os
 import Visualizer as Vis
 import AlgFactory as AlgFact
+import glob
 
 class Controller (object):
 	"""This is the controller for the Algorithm Visuialization module.
@@ -30,9 +31,10 @@ class Controller (object):
 		self.visualizer = Vis.Visualizer(guiType)
 		self.algFactory = AlgFact.AlgFactory()
 		self.algInstance = None
-		self.cmdLineController = CmdLineController()
 		
 		if guiType == 'default':
+			self.cmdLineController = CmdLineController()
+			self.cmdLineController.setObjects(self.algFactory, self.visualizer)
 			self.startCmdLine()
 		else:
 			#To be done 
@@ -62,6 +64,13 @@ class CmdLineController(cmd.Cmd):
 	prompt = "(AlgVis)"
 	file = None
 	
+	def setObjects(self, algFactory, visualizer):
+		"""
+		Initialies the refrences to the AlgFactory and visualizer objects.
+		
+		"""
+		self.algFactory = algFactory
+		self.visualizer = visualizer
 	
 	# --- ALGVis Shell commands ---
 	"""
@@ -71,25 +80,40 @@ class CmdLineController(cmd.Cmd):
 	Get alg info
 	
 	"""
-	def do_run_alg(self, arg):
+	def do_run(self, arg):
 		"""
 		Runs a paticular algorithm
+		
+		input: String of the algorithm to be run
 		
 		"""
 		print arg
 		print type(arg)
 		
-	def do_alg_info(self, arg):
+	def do_info(self, arg):
 		"""
 		Gets the info of a paticular algorithm
-		"""
-		print arg
 		
-	def do_list_algs(self, arg)
+		input: String of the algorithm selected
+		"""
+		if( len(arg.split(" ")) > 1):
+			print "\t Too many arguments." 
+			print "\t Please input algorithm as a single word"
+			print "\t IE. 'info DefaultAlg'"
+		else:
+			info = self.algFactory.get_alg_info(arg)
+			print info
+		
+	def do_list(self, arg):
 		"""
 		Lists the possible algoithms
 		"""
-		print arg
+		files = self.algFactory.get_alg_list()
+				
+		for f in files:
+			#print the files/classes
+			print "    " + f
+		
 	
 		
 def parse(arg):
@@ -98,4 +122,5 @@ def parse(arg):
     
 if __name__ == '__main__':
 	controller = Controller()
+	controller.startCmdLine()
 	
