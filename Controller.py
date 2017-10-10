@@ -29,8 +29,7 @@ class Controller (object):
 				(ie my eventual website)
 		"""
 		self.visualizer = Vis.Visualizer(guiType)
-		self.algFactory = AlgFact.AlgFactory()
-		self.algInstance = None
+		self.algFactory = AlgFact.AlgFactory(self.visualizer)
 		
 		if guiType == 'default':
 			self.cmdLineController = CmdLineController()
@@ -87,8 +86,16 @@ class CmdLineController(cmd.Cmd):
 		input: String of the algorithm to be run
 		
 		"""
-		print arg
-		print type(arg)
+		if( len(arg.split(" ")) > 1):
+			print "\t Too many arguments." 
+			print "\t Please input algorithm as a single word"
+			print "\t IE. 'run DefaultAlg'"
+		else:
+			instance = self.algFactory.get_alg_instance(arg)
+			
+			print instance.inputs
+			
+		
 		
 	def do_info(self, arg):
 		"""

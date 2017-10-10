@@ -10,20 +10,51 @@ class AlgFactory (object):
 	
 	It also provides the list of possible algoithms and helpdocs regarding 
 		how to start each paticular algorithm
+		
+	Input: visObj - Refrence to the Visualizer created by the controller
 	
 	Attributes:
 	
 		
 	"""
 	
-	def __init__ (self):
+	def __init__ (self, visObj):
 		self.alg_list = []
 		self.set_alg_list()
+		self.visualizer = visObj
 		None
+		
+	def get_alg_instance(self, algName):
+		"""
+		Get an instance of an Algorithm object that has been set up and is 
+			ready to go
+			
+		Input: String Name of the algorithm class
+		Output: Object
+		
+		"""
+		
+		if algName not in self.alg_list:
+			print "That algorithm selection does not seem to exist"
+			return "That algorithm selection does not seem to exist"
+			
+		#perform some jankyness to dynamicly get the class object (introspection)
+		algModule = globals()[algName]
+		class_ = getattr(algModule, algName)
+		
+		instance = class_()
+		
+		#get User input
+		self.visualizer.handle_alg_input(instance)
+		
+		return instance
 		
 	def get_alg_info(self, algName):
 		"""
 		Gets the docstring of a paticular algorithm
+		
+		Input: String Name of the algorithm class
+		Output: List
 		"""
 		
 		algInfo = ""
@@ -31,13 +62,21 @@ class AlgFactory (object):
 		if algName not in self.alg_list:
 			return "That algorithm selection does not seem to exist"
 		
+		#perform some jankyness to dynamicly get the class object
 		algModule = globals()[algName]
 		class_ = getattr(algModule, algName)
 		algInfo = class_.__doc__ 
+		
 		return algInfo
 		
 	def set_alg_list(self):
-	
+		"""
+		Sets the list of possible algorithms to run on class instantiation
+		
+		Input None
+		Output: None
+		"""
+		
 		dir_path = os.path.dirname(os.path.realpath(__file__))
 		algorithms_path = dir_path + "/Algs"
 		temp_list = []
