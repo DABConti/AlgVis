@@ -92,7 +92,8 @@ class AlgFactory (object):
 			
 		for item in temp_list:
 			if("__init__" not in item):
-				self.alg_list.append(item.split("/")[-1].strip(".py"))
+				
+				self.alg_list.append(item.split("/")[-1].split(".py")[0])
 		
 	def get_alg_list(self):
 		"""

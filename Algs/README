@@ -1,0 +1,9 @@
+Algorithm Visualization 
+
+Run with 'python Controller.py' which brings up a simple shell
+
+Commands
+help - Displays these commands
+info [algorithm] - Displays info on a paticular algorithm
+list - list the possible algorithms
+run [algorithm] - runs a paticular algorithm

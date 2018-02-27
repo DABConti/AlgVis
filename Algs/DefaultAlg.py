@@ -14,6 +14,8 @@ class DefaultAlg (object):
 		Returns an instance of the Default Alg Class
 		"""
 		#set its name
+		
+		print "got here"
 		self._defineName()
 		
 		#the definitions of the inputs
@@ -26,6 +28,9 @@ class DefaultAlg (object):
 		#the dictionary of the data structures that are relivent to visualization
 		self.dataStruts = {}
 		self._defineDataStructs
+		
+		#flag to say when alg is done
+		self.isDone = False
 	
 	def _defineName(self):
 		"""
@@ -88,6 +93,30 @@ class DefaultAlg (object):
 		for inDef in self.inputDef :
 			inputName = inDef[0]
 			self.inputs[inputName] = inputs[inputName]
+			
+	def run(self):
+		"""
+		Runs the list reversal algorithm
+		"""
+		listInput = self.inputs["inputList"]
+		self.dataStruts['outputList'] = listInput
+		
+		i = 0
+		
+		while i < len(listInput)/2:
+			headNumIndex = i
+			tailNumIndex = (i+1)*-1
+			headNum = listInput[headNumIndex]
+			tailNum = listInput[tailNumIndex]
+			listInput[headNumIndex] = tailNum
+			listInput[tailNumIndex] = headNum
+			
+			self.dataStruts['outputList'] = listInput
+			i+=1
+			
+		print self.dataStruts['outputList']
+		
+		self.isDone = True
 		
 			
 	

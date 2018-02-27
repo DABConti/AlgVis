@@ -93,7 +93,11 @@ class CmdLineController(cmd.Cmd):
 		else:
 			instance = self.algFactory.get_alg_instance(arg)
 			
-			print instance.inputs
+			#run algorithm, it will wait for the visualizer to tell it to go
+			instance.run()
+			
+			
+			#run visualizer
 			
 		
 		
